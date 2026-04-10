@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cenote Yokdzonot - Experiencia Única en la Naturaleza</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6; color: #333;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  min-height: 100vh;
+}
+
+.navbar {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white; padding: 1rem 0;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  position: sticky; top: 0; z-index: 1000;
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2rem; gap: 1rem;
+}
+.logo { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+.nav-links a {
+  color: white; text-decoration: none; padding: 0.5rem 1rem;
+  border-radius: 25px; transition: all 0.3s ease; font-weight: 500; cursor: pointer;
+}
+.nav-links a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+.lang-btn {
+  background: rgba(255,255,255,0.15); color: white;
+  border: 2px solid rgba(255,255,255,0.4); padding: 0.4rem 1rem;
+  border-radius: 25px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem; transition: all 0.3s ease;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.3); }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 9999;
+  justify-content: center; align-items: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white; border-radius: 16px; width: 90%; max-width: 700px;
+  max-height: 85vh; display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem 0; }
+.modal-header h2 { font-size: 1.8rem; font-weight: 800; color: #1a2e1a; }
+.modal-close {
+  background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #555;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+}
+.modal-close:hover { background: #f0f0f0; }
+.modal-tabs { display: flex; padding: 0 2rem; border-bottom: 1px solid #e0e0e0; margin-top: 1rem; }
+.modal-tab {
+  padding: 0.8rem 1.2rem; font-size: 1rem; font-weight: 600; cursor: pointer;
+  border: none; background: none; color: #1a3a1a;
+  border-bottom: 3px solid #1a3a1a; margin-bottom: -1px;
+}
+.modal-body { padding: 1.5rem 2rem; overflow-y: auto; flex: 1; }
+.modal-section-title { font-size: 1rem; font-weight: 700; color: #1a2e1a; margin-bottom: 1rem; }
+.lang-suggested {
+  border: 2px solid #1a3a1a; border-radius: 10px; padding: 0.8rem 1.2rem;
+  margin-bottom: 2rem; cursor: pointer; display: inline-block; min-width: 160px; transition: background 0.2s;
+}
+.lang-suggested:hover { background: #f5f9f5; }
+.lang-suggested .country { font-weight: 700; font-size: 1rem; color: #1a2e1a; }
+.lang-suggested .lang { font-size: 0.9rem; color: #555; }
+.lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.6rem; }
+.lang-grid-item {
+  border: 1px solid #e0e0e0; border-radius: 10px; padding: 0.8rem 1rem; cursor: pointer; transition: all 0.2s;
+}
+.lang-grid-item:hover { border-color: #1a3a1a; background: #f5f9f5; }
+.lang-grid-item.selected { border-color: #1a3a1a; border-width: 2px; background: #f0f7f0; }
+.lang-grid-item .country { font-weight: 700; font-size: 0.95rem; color: #1a2e1a; }
+.lang-grid-item .lang { font-size: 0.85rem; color: #777; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+.section { display: none; animation: fadeIn 0.5s ease-in; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+.hero { text-align: center; color: white; padding: 4rem 0; }
+.hero h1 {
+  font-size: 3rem; margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #a8e063);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9; }
+.hero img { width: 100%; max-width: 800px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+.card {
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+  padding: 2.5rem; border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.card h2 { color: #1e3c72; margin-bottom: 1.5rem; font-size: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+
+.restaurante-banner {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  border-radius: 20px; padding: 3rem 2rem; text-align: center; color: white; margin-bottom: 2rem;
+}
+.restaurante-divider { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 1.5rem 0; }
+.restaurante-divider::before, .restaurante-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.3); }
+.restaurante-titulo {
+  font-size: 2.5rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+  background: linear-gradient(45deg, #fff, #a8e063);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.restaurante-barra { display: flex; align-items: stretch; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
+.restaurante-vertical {
+  writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 6px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); padding: 1rem 0.5rem; border-left: 3px solid rgba(255,255,255,0.3);
+}
+.restaurante-info { flex:1; text-align:left; display:flex; flex-direction:column; gap:1rem; }
+.restaurante-tag {
+  display: inline-block; background: rgba(168,224,99,0.2); border: 1px solid rgba(168,224,99,0.5);
+  color: #a8e063; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.85rem;
+  font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+}
+.restaurante-desc { font-size: 1.1rem; opacity: 0.85; line-height: 1.8; }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.menu-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 1rem; text-align: center; }
+.menu-item span { font-size: 2rem; display: block; margin-bottom: 0.3rem; }
+.menu-item p { font-size: 0.9rem; opacity: 0.8; }
+
+.map-container { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin: 2rem 0; position: relative; }
+#mapa { width: 100%; height: 450px; border: none; }
+#estadoRuta {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  background: rgba(30,60,114,0.95); color: white; padding: 0.7rem 1.5rem;
+  border-radius: 25px; font-weight: 600; font-size: 1rem;
+  z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); white-space: nowrap;
+}
+
+.btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; padding: 1rem 2rem; border: none; border-radius: 50px;
+  font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+  display: inline-flex; align-items: center; gap: 0.5rem; margin: 0.5rem;
+}
+.btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(102,126,234,0.4); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-success { background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%); }
+
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.gallery-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.gallery-grid img:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+.contact-item { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 1.5rem; border-radius: 15px; }
+.contact-item h3 { color: #1e3c72; margin-bottom: 0.5rem; }
+
+.leaflet-control-layers { font-size: 16px; padding: 10px; border-radius: 12px; }
+.leaflet-control-layers-toggle { width: 50px !important; height: 50px !important; }
+
+.btn-modo {
+  background: #e8e8e8; color: #333; padding: 0.6rem 1.2rem;
+  border: 2px solid #ddd; border-radius: 50px; font-size: 1rem;
+  font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+}
+.btn-modo.activo { background: linear-gradient(135deg, #0077b6, #00b4d8); color: white; border-color: #0077b6; }
+
+@media (max-width: 768px) {
+  .nav-links { gap: 0.5rem; justify-content: center; }
+  .hero h1 { font-size: 2rem; }
+  .container { padding: 1rem; }
+  .nav-container { flex-direction: column; gap: 0.8rem; padding: 1rem; }
+  .restaurante-titulo { font-size: 1.8rem; letter-spacing: 2px; }
+  .restaurante-barra { flex-direction: column; }
+  .restaurante-vertical { writing-mode: horizontal-tb; transform: none; border-left: none; border-top: 3px solid rgba(255,255,255,0.3); padding: 0.5rem 0; }
+  .lang-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  .seccion-info { flex-direction: column; }
+  .seccion-info .imagen-flotante { max-width: 100%; }
+}
+
+.seccion-info {
+  display: flex; align-items: center; gap: 3rem;
+  background: rgba(255,255,255,0.08); border-radius: 20px;
+  padding: 2.5rem; margin-top: 2.5rem;
+  flex-wrap: wrap; justify-content: space-between;
+}
+.seccion-info .texto { flex: 1; min-width: 250px; color: white; text-align: left; }
+.seccion-info .texto h3 {
+  font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #a8e063);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.seccion-info .texto p { font-size: 1.05rem; opacity: 0.85; line-height: 1.8; }
+.seccion-info .imagen-flotante { flex: 1; min-width: 280px; max-width: 420px; margin-left: auto; }
+.imagen-flotante img {
+  width: 100%; height: 300px; object-fit: cover;
+  border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.lightbox {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92); z-index: 9998;
+  justify-content: center; align-items: center;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.lightbox-cerrar {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  color: white; font-size: 2.5rem; cursor: pointer;
+  background: none; border: none; line-height: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFuera(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Preferences</h2>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab">Region and Language</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-section-title">Suggested region and language</p>
+      <div class="lang-suggested" onclick="elegirIdioma('es', null)">
+        <div class="country">México</div>
+        <div class="lang">Español</div>
+      </div>
+      <p class="modal-section-title">Choose a region and language</p>
+      <div class="lang-grid">
+        <div class="lang-grid-item selected" onclick="elegirIdioma('es', this)"><div class="country">México</div><div class="lang">Español</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('en', this)"><div class="country">United States</div><div class="lang">English</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('en-gb', this)"><div class="country">United Kingdom</div><div class="lang">English</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('fr', this)"><div class="country">France</div><div class="lang">Français</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('de', this)"><div class="country">Deutschland</div><div class="lang">Deutsch</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('it', this)"><div class="country">Italia</div><div class="lang">Italiano</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('pt', this)"><div class="country">Brasil</div><div class="lang">Português</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('es-ar', this)"><div class="country">Argentina</div><div class="lang">Español</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('es', this)"><div class="country">Colombia</div><div class="lang">Español</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('es', this)"><div class="country">Chile</div><div class="lang">Español</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('nl', this)"><div class="country">Nederland</div><div class="lang">Nederlands</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('ja', this)"><div class="country">日本</div><div class="lang">日本語</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('zh', this)"><div class="country">中国</div><div class="lang">中文</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('ko', this)"><div class="country">한국</div><div class="lang">한국어</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('ru', this)"><div class="country">Россия</div><div class="lang">Русский</div></div>
+        <div class="lang-grid-item" onclick="elegirIdioma('ar', this)"><div class="country">العربية</div><div class="lang">العربية</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">🌊 Cenote Yokdzonot</div>
+    <ul class="nav-links">
+      <li><button class="lang-btn" onclick="abrirModal()">🌐 <span id="langLabel">ES</span> ▾</button></li>
+      <li><a onclick="mostrar('inicio')" data-i18n="nav_inicio">Inicio</a></li>
+      <li><a onclick="mostrar('restaurante')" data-i18n="nav_restaurante">Restaurante</a></li>
+      <li><a onclick="mostrar('lugar')" data-i18n="nav_ubicacion">Ubicación</a></li>
+      <li><a onclick="mostrar('galeria')" data-i18n="nav_galeria">Galería</a></li>
+      <li><a onclick="mostrar('contacto')" data-i18n="nav_contacto">Contáctanos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- INICIO -->
+  <div id="inicio" class="section active hero">
+    <h1 data-i18n="hero_titulo">Bienvenido al Cenote Yokdzonot</h1>
+    <p data-i18n="hero_subtitulo">Disfruta de la naturaleza de una manera única en las cristalinas aguas de Yucatán.</p>
+    <img src="./img/cenote.png" alt="Cenote Yokdzonot">
+
+    <div style="margin-top: 2.5rem; width: 100%; max-width: 1000px; margin-left: auto; margin-right: auto;">
+      <video controls style="width:100%; height: 560px; object-fit: cover; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <source src="./img/videoportada.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="seccion-info">
+      <div class="texto">
+        <h3 data-i18n="sec1_titulo">🌿 Naturaleza en estado puro</h3>
+        <p data-i18n="sec1_desc">Sumérgete en las aguas cristalinas del Cenote Yokdzonot, un tesoro natural escondido en el corazón de Yucatán. Perfecta para nadar, snorkelear y conectar con la naturaleza.</p>
+      </div>
+      <div class="imagen-flotante">
+        <img src="./img/WhatsApp Image 2026-04-09 at 1.08.35 AM.jpeg" alt="Naturaleza">
+      </div>
+    </div>
+
+    <div class="seccion-info">
+      <div class="texto">
+        <h3 data-i18n="sec2_titulo">🤿 Aventura bajo el agua</h3>
+        <p data-i18n="sec2_desc">Descubre un mundo subacuático único. Las estalactitas y la luz que penetra desde la superficie crean un espectáculo visual incomparable que no olvidarás.</p>
+      </div>
+      <div class="imagen-flotante">
+        <img src="./img/debajowalter.png" alt="Aventura">
+      </div>
+    </div>
+
+    <div class="seccion-info">
+      <div class="texto">
+        <h3 data-i18n="sec3_titulo">👨‍👩‍👧 Ideal para toda la familia</h3>
+        <p data-i18n="sec3_desc">Un lugar seguro y mágico para vivir momentos únicos con tu familia. Actividades para todas las edades en un entorno natural privilegiado de Yucatán.</p>
+      </div>
+      <div class="imagen-flotante">
+        <img src="./img/family.png" alt="Familia">
+      </div>
+    </div>
+  </div>
+
+  <!-- RESTAURANTE -->
+  <div id="restaurante" class="section">
+    <div class="restaurante-banner">
+      <div class="restaurante-divider">
+        <span class="restaurante-titulo" data-i18n="rest_titulo">Restaurante</span>
+      </div>
+      <div class="restaurante-barra">
+        <div class="restaurante-vertical" data-i18n="rest_barra">Restaurante</div>
+        <div class="restaurante-info">
+          <span class="restaurante-tag" data-i18n="rest_tag">Cocina Yucateca</span>
+          <p class="restaurante-desc" data-i18n="rest_desc">Disfruta de los sabores auténticos de Yucatán en nuestro restaurante, rodeado de naturaleza. Ofrecemos platillos tradicionales elaborados con ingredientes frescos y locales.</p>
+          <div class="menu-grid">
+            <div class="menu-item"><span>🫔</span><p data-i18n="rest_item1">Cochinita Pibil</p></div>
+            <div class="menu-item"><span>🍲</span><p data-i18n="rest_item2">Sopa de Lima</p></div>
+            <div class="menu-item"><span>🥘</span><p data-i18n="rest_item3">Poc Chuc</p></div>
+            <div class="menu-item"><span>🍹</span><p data-i18n="rest_item4">Aguas Frescas</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UBICACIÓN -->
+  <div id="lugar" class="section">
+    <div class="card">
+      <h2>📍 <span data-i18n="ubi_titulo">Ubicación Exacta</span></h2>
+      <p><strong data-i18n="ubi_nombre">Cenote Yokdzonot, Yucatán, México</strong></p>
+      <p style="color:#555; font-size:0.95rem; margin-top:0.3rem;">
+        📮 Calle 20 s/n, entre calle 27 y calle 29, 97922 Yokdzonot, Yuc.
+      </p>
+      <p data-i18n="ubi_desc">¡Encuéntranos fácilmente con la ruta directa desde tu ubicación!</p>
+      <div class="map-container">
+        <div id="estadoRuta" style="display:none;"></div>
+        <div id="mapa"></div>
+      </div>
+      <div style="text-align:center; margin:2rem 0;">
+        <div style="display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <button class="btn-modo activo" onclick="seleccionarModo('driving', this)">🚗 <span data-i18n="modo_coche">Coche</span></button>
+          <button class="btn-modo" onclick="seleccionarModo('bike', this)">🏍️ <span data-i18n="modo_moto">Moto</span></button>
+          <button class="btn-modo" onclick="seleccionarModo('cycling', this)">🚲 <span data-i18n="modo_bici">Bicicleta</span></button>
+          <button class="btn-modo" onclick="seleccionarModo('foot', this)">🚶 <span data-i18n="modo_pie">Caminando</span></button>
+        </div>
+        <button class="btn" onclick="comoLlegar(event)" style="background:linear-gradient(135deg,#0077b6,#00b4d8);"><span data-i18n="btn_llegar">Cómo llegar desde mi ubicación</span></button>
+        <br><br>
+        <button class="btn" onclick="abrirMapaGoogle()" style="background:linear-gradient(135deg,#1b4332,#40916c);">🗺️ <span data-i18n="btn_gmaps">Abrir en Google Maps</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALERÍA -->
+  <div id="galeria" class="section">
+
+    <!-- Galería principal -->
+    <div class="card">
+      <h2>🖼️ <span data-i18n="gal_titulo">Galería</span></h2>
+      <p data-i18n="gal_desc">Descubre la belleza del cenote a través de estas imágenes</p>
+      <div class="gallery-grid">
+        <img src="./img/cenote1.png" alt="Cenote" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/cenote2.png" alt="Naturaleza" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/waltercristal.png" alt="Aguas cristalinas" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/cenote3.png" alt="Cueva natural" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/cenote4.png" alt="Aguas cristalinas" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/cenote5.png" alt="Cueva natural" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+      </div>
+    </div>
+
+    <!-- Vista 360 -->
+    <div class="card" style="margin-top: 2rem;">
+      <h2>🔭 <span data-i18n="gal_360_titulo">Vista 360°</span></h2>
+      <p data-i18n="gal_360_desc">Explora el cenote en una experiencia inmersiva de 360 grados</p>
+      <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:1.5rem; justify-content:center;">
+        <div style="flex:1; min-width:280px; background:linear-gradient(135deg,#0f2027,#203a43); border-radius:20px; padding:2rem; text-align:center; color:white;">
+          <div style="font-size:4rem; margin-bottom:1rem;">🌊</div>
+          <h3 style="font-size:1.3rem; margin-bottom:0.5rem; color:#a8e063;" data-i18n="gal_360_c1">Vista 360° — Cenote</h3>
+          <p style="opacity:0.8; margin-bottom:1.5rem; font-size:0.95rem;" data-i18n="gal_360_c1_desc">Sumérgete en una vista panorámica del cenote desde adentro</p>
+          <a href="https://maps.app.goo.gl/siHD5UVqBez6CCjp7" target="_blank"
+             style="background:linear-gradient(135deg,#0077b6,#00b4d8); color:white; padding:0.8rem 2rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:1rem; display:inline-block;"
+             data-i18n="gal_360_btn">Ver en 360°</a>
+        </div>
+        <div style="flex:1; min-width:280px; background:linear-gradient(135deg,#0f2027,#203a43); border-radius:20px; padding:2rem; text-align:center; color:white;">
+          <div style="font-size:4rem; margin-bottom:1rem;">🌿</div>
+          <h3 style="font-size:1.3rem; margin-bottom:0.5rem; color:#a8e063;" data-i18n="gal_360_c2">Vista 360° — Entorno</h3>
+          <p style="opacity:0.8; margin-bottom:1.5rem; font-size:0.95rem;" data-i18n="gal_360_c2_desc">Descubre el entorno natural que rodea el cenote en panorámica</p>
+          <a href="https://maps.app.goo.gl/XfQqtuaNh9KcKB248" target="_blank"
+             style="background:linear-gradient(135deg,#1b4332,#40916c); color:white; padding:0.8rem 2rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:1rem; display:inline-block;"
+             data-i18n="gal_360_btn">Ver en 360°</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zonas verdes -->
+    <div class="card" style="margin-top: 2rem;">
+      <h2>🌿 <span data-i18n="gal_verde_titulo">Zonas verdes</span></h2>
+      <p data-i18n="gal_verde_desc">Explora más imágenes del cenote</p>
+      <div class="gallery-grid">
+        <img src="./img/zonaverde02.png" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/zonaverde04.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/zonaverde05.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="card" style="margin-top: 2rem;">
+      <h2>🎬 <span data-i18n="gal_video_titulo">Videos</span></h2>
+      <p data-i18n="gal_video_desc">Explora el cenote en video</p>
+      <div class="gallery-grid">
+        <video controls style="width:100%; height:250px; object-fit:cover; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+          <source src="./img/videocenote1.mp4" type="video/mp4">
+        </video>
+        <video controls style="width:100%; height:250px; object-fit:cover; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+          <source src="./img/videocenote2.mp4" type="video/mp4">
+        </video>
+        <video controls style="width:100%; height:250px; object-fit:cover; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+          <source src="./img/pezcenote3.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Sitios además del cenote -->
+    <div class="card" style="margin-top: 2rem;">
+      <h2>🏡 <span data-i18n="gal_sitios_titulo">Sitios además del cenote</span></h2>
+      <p data-i18n="gal_sitios_desc">Explora más el lugar donde se encuentra el cenote</p>
+      <div class="gallery-grid">
+        <img src="./img/casita001.png" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/pasillo01.png" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/casitaazul.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/pasillo02.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/casita02.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/house03.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/corredor02.png" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/corredor03.jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+        <img src="./img/viewcenote02jpg.jpeg" alt="Foto" onclick="abrirLightbox(this.src)" style="cursor:pointer;">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONTACTO -->
+  <div id="contacto" class="section">
+    <div class="card">
+      <h2>📞 <span data-i18n="con_titulo">Contáctanos</span></h2>
+      <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
+
+        <div class="contact-item" style="display:flex; align-items:center; gap:1.5rem; text-align:left; padding:1.5rem 2rem;">
+          <span style="font-size:2.5rem;">📱</span>
+          <div><h3 style="color:#1e3c72; margin-bottom:0.2rem;">WhatsApp</h3><p style="color:#555;">+52 9851212328</p></div>
+          <a href="https://wa.me/529851212328" target="_blank"
+             style="margin-left:auto; background:linear-gradient(135deg,#25d366,#128c7e); color:white; padding:0.6rem 1.4rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.95rem;"
+             data-i18n="con_wa">Abrir WhatsApp</a>
+        </div>
+
+        <div class="contact-item" style="display:flex; align-items:center; gap:1.5rem; text-align:left; padding:1.5rem 2rem;">
+          <span style="font-size:2.5rem;">📧</span>
+          <div><h3 style="color:#1e3c72; margin-bottom:0.2rem;">Email</h3><p style="color:#555;">yokdzonotcenotes@hotmail.com</p></div>
+          <a href="mailto:yokdzonotcenotes@hotmail.com"
+             style="margin-left:auto; background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:0.6rem 1.4rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.95rem;"
+             data-i18n="con_email">Enviar Email</a>
+        </div>
+
+        <div class="contact-item" style="text-align:left; padding:1.5rem 2rem;">
+          <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:1rem;">
+            <span style="font-size:2.5rem;">🕒</span>
+            <div>
+              <h3 style="color:#1e3c72; margin-bottom:0.4rem;" data-i18n="con_horario">Horario</h3>
+              <span style="background:linear-gradient(135deg,#56ab2f,#a8e063); color:white; padding:0.3rem 1rem; border-radius:50px; font-weight:600; font-size:0.9rem;" data-i18n="con_abierto">🗓️ Reserva ya mismo</span>
+            </div>
+          </div>
+          <table style="width:100%; border-collapse:collapse; font-size:0.95rem; color:#444;">
+            <tr style="font-weight:700; color:#1e3c72;">
+              <td style="padding:0.4rem 0.8rem;" data-i18n="dia_mie">Miércoles</td>
+              <td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td>
+            </tr>
+            <tr><td style="padding:0.4rem 0.8rem;" data-i18n="dia_jue">Jueves</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+            <tr style="background:#f0f4ff;"><td style="padding:0.4rem 0.8rem;" data-i18n="dia_vie">Viernes</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+            <tr><td style="padding:0.4rem 0.8rem;" data-i18n="dia_sab">Sábado</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+            <tr style="background:#f0f4ff;"><td style="padding:0.4rem 0.8rem;" data-i18n="dia_dom">Domingo</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+            <tr><td style="padding:0.4rem 0.8rem;" data-i18n="dia_lun">Lunes</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+            <tr style="background:#f0f4ff;"><td style="padding:0.4rem 0.8rem;" data-i18n="dia_mar">Martes</td><td style="padding:0.4rem 0.8rem;">9 a.m. – 5 p.m.</td></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+  <button class="lightbox-cerrar" onclick="cerrarLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+<script>
+const traducciones = {
+  es: {
+    nav_inicio:'Inicio', nav_restaurante:'Restaurante', nav_ubicacion:'Ubicación', nav_galeria:'Galería', nav_contacto:'Contáctanos',
+    hero_titulo:'Bienvenido al Cenote Yokdzonot', hero_subtitulo:'Disfruta de la naturaleza de una manera única en las cristalinas aguas de Yucatán.',
+    rest_titulo:'Restaurante', rest_barra:'Restaurante', rest_tag:'Cocina Yucateca',
+    rest_desc:'Disfruta de los sabores auténticos de Yucatán en nuestro restaurante, rodeado de naturaleza. Ofrecemos platillos tradicionales elaborados con ingredientes frescos y locales.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Sopa de Lima', rest_item3:'Poc Chuc', rest_item4:'Aguas Frescas',
+    ubi_titulo:'Ubicación Exacta', ubi_nombre:'Cenote Yokdzonot, Yucatán, México', ubi_desc:'¡Encuéntranos fácilmente con la ruta directa desde tu ubicación!',
+    modo_coche:'Coche', modo_moto:'Moto', modo_bici:'Bicicleta', modo_pie:'Caminando',
+    btn_llegar:'Cómo llegar desde mi ubicación', btn_gmaps:'Abrir en Google Maps',
+    gal_titulo:'Galería', gal_desc:'Descubre la belleza del cenote a través de estas imágenes',
+    gal_360_titulo:'Vista 360°', gal_360_desc:'Explora el cenote en una experiencia inmersiva de 360 grados',
+    gal_360_c1:'Vista 360° — Cenote', gal_360_c1_desc:'Sumérgete en una vista panorámica del cenote desde adentro',
+    gal_360_c2:'Vista 360° — Entorno', gal_360_c2_desc:'Descubre el entorno natural que rodea el cenote en panorámica',
+    gal_360_btn:'Ver en 360°',
+    gal_verde_titulo:'Zonas verdes', gal_verde_desc:'Explora más imágenes del cenote',
+    gal_video_titulo:'Videos', gal_video_desc:'Explora el cenote en video',
+    gal_sitios_titulo:'Sitios además del cenote', gal_sitios_desc:'Explora más el lugar donde se encuentra el cenote',
+    con_titulo:'Contáctanos', con_wa:'Abrir WhatsApp', con_email:'Enviar Email',
+    con_horario:'Horario', con_abierto:'🗓️ Reserva ya mismo',
+    dia_mie:'Miércoles', dia_jue:'Jueves', dia_vie:'Viernes', dia_sab:'Sábado', dia_dom:'Domingo', dia_lun:'Lunes', dia_mar:'Martes',
+    sec1_titulo:'🌿 Naturaleza en estado puro', sec1_desc:'Sumérgete en las aguas cristalinas del Cenote Yokdzonot, un tesoro natural escondido en el corazón de Yucatán. Perfecta para nadar, snorkelear y conectar con la naturaleza.',
+    sec2_titulo:'🤿 Aventura bajo el agua', sec2_desc:'Descubre un mundo subacuático único. Las estalactitas y la luz que penetra desde la superficie crean un espectáculo visual incomparable que no olvidarás.',
+    sec3_titulo:'👨‍👩‍👧 Ideal para toda la familia', sec3_desc:'Un lugar seguro y mágico para vivir momentos únicos con tu familia. Actividades para todas las edades en un entorno natural privilegiado de Yucatán.',
+  },
+  en: {
+    nav_inicio:'Home', nav_restaurante:'Restaurant', nav_ubicacion:'Location', nav_galeria:'Gallery', nav_contacto:'Contact Us',
+    hero_titulo:'Welcome to Cenote Yokdzonot', hero_subtitulo:'Enjoy nature in a unique way in the crystal-clear waters of Yucatán.',
+    rest_titulo:'Restaurant', rest_barra:'Restaurant', rest_tag:'Yucatecan Cuisine',
+    rest_desc:'Enjoy the authentic flavors of Yucatán in our restaurant surrounded by nature.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Lime Soup', rest_item3:'Poc Chuc', rest_item4:'Fresh Drinks',
+    ubi_titulo:'Exact Location', ubi_nombre:'Cenote Yokdzonot, Yucatán, Mexico', ubi_desc:'Find us easily with a direct route from your location!',
+    modo_coche:'Car', modo_moto:'Motorcycle', modo_bici:'Bicycle', modo_pie:'Walking',
+    btn_llegar:'Get directions from my location', btn_gmaps:'Open in Google Maps',
+    gal_titulo:'Gallery', gal_desc:'Discover the beauty of the cenote through these images',
+    gal_360_titulo:'360° View', gal_360_desc:'Explore the cenote in an immersive 360 degree experience',
+    gal_360_c1:'360° View — Cenote', gal_360_c1_desc:'Immerse yourself in a panoramic view of the cenote from inside',
+    gal_360_c2:'360° View — Surroundings', gal_360_c2_desc:'Discover the natural environment surrounding the cenote',
+    gal_360_btn:'View in 360°',
+    gal_verde_titulo:'Green Areas', gal_verde_desc:'Explore more images of the cenote',
+    gal_video_titulo:'Videos', gal_video_desc:'Explore the cenote in video',
+    gal_sitios_titulo:'More than the cenote', gal_sitios_desc:'Explore the area surrounding the cenote',
+    con_titulo:'Contact Us', con_wa:'Open WhatsApp', con_email:'Send Email',
+    con_horario:'Hours', con_abierto:'🗓️ Book right now',
+    dia_mie:'Wednesday', dia_jue:'Thursday', dia_vie:'Friday', dia_sab:'Saturday', dia_dom:'Sunday', dia_lun:'Monday', dia_mar:'Tuesday',
+    sec1_titulo:'🌿 Nature in its pure state', sec1_desc:'Dive into the crystal-clear waters of Cenote Yokdzonot. Perfect for swimming, snorkeling and connecting with nature.',
+    sec2_titulo:'🤿 Underwater adventure', sec2_desc:'Discover a unique underwater world. The stalactites and light create an incomparable visual spectacle.',
+    sec3_titulo:'👨‍👩‍👧 Perfect for the whole family', sec3_desc:'A safe and magical place for unique moments with your family. Activities for all ages.',
+  },
+  'en-gb': {
+    nav_inicio:'Home', nav_restaurante:'Restaurant', nav_ubicacion:'Location', nav_galeria:'Gallery', nav_contacto:'Contact Us',
+    hero_titulo:'Welcome to Cenote Yokdzonot', hero_subtitulo:'Enjoy nature in a unique way in the crystal-clear waters of Yucatán.',
+    rest_titulo:'Restaurant', rest_barra:'Restaurant', rest_tag:'Yucatecan Cuisine',
+    rest_desc:'Enjoy the authentic flavours of Yucatán in our restaurant surrounded by nature.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Lime Soup', rest_item3:'Poc Chuc', rest_item4:'Fresh Drinks',
+    ubi_titulo:'Exact Location', ubi_nombre:'Cenote Yokdzonot, Yucatán, Mexico', ubi_desc:'Find us easily with a direct route from your location!',
+    modo_coche:'Car', modo_moto:'Motorbike', modo_bici:'Bicycle', modo_pie:'Walking',
+    btn_llegar:'Get directions from my location', btn_gmaps:'Open in Google Maps',
+    gal_titulo:'Gallery', gal_desc:'Discover the beauty of the cenote through these images',
+    gal_360_titulo:'360° View', gal_360_desc:'Explore the cenote in an immersive 360 degree experience',
+    gal_360_c1:'360° View — Cenote', gal_360_c1_desc:'Immerse yourself in a panoramic view of the cenote from inside',
+    gal_360_c2:'360° View — Surroundings', gal_360_c2_desc:'Discover the natural environment surrounding the cenote',
+    gal_360_btn:'View in 360°',
+    gal_verde_titulo:'Green Areas', gal_verde_desc:'Explore more images of the cenote',
+    gal_video_titulo:'Videos', gal_video_desc:'Explore the cenote in video',
+    gal_sitios_titulo:'More than the cenote', gal_sitios_desc:'Explore the area surrounding the cenote',
+    con_titulo:'Contact Us', con_wa:'Open WhatsApp', con_email:'Send Email',
+    con_horario:'Opening Hours', con_abierto:'🗓️ Book right now',
+    dia_mie:'Wednesday', dia_jue:'Thursday', dia_vie:'Friday', dia_sab:'Saturday', dia_dom:'Sunday', dia_lun:'Monday', dia_mar:'Tuesday',
+    sec1_titulo:'🌿 Nature in its pure state', sec1_desc:'Dive into the crystal-clear waters of Cenote Yokdzonot. Perfect for swimming, snorkelling and connecting with nature.',
+    sec2_titulo:'🤿 Underwater adventure', sec2_desc:'Discover a unique underwater world. The stalactites and light create an incomparable visual spectacle.',
+    sec3_titulo:'👨‍👩‍👧 Perfect for the whole family', sec3_desc:'A safe and magical place for unique moments with your family. Activities for all ages.',
+  },
+  fr: {
+    nav_inicio:'Accueil', nav_restaurante:'Restaurant', nav_ubicacion:'Localisation', nav_galeria:'Galerie', nav_contacto:'Contactez-nous',
+    hero_titulo:'Bienvenue au Cenote Yokdzonot', hero_subtitulo:"Profitez de la nature d'une manière unique dans les eaux cristallines du Yucatán.",
+    rest_titulo:'Restaurant', rest_barra:'Restaurant', rest_tag:'Cuisine Yucatèque',
+    rest_desc:'Savourez les saveurs authentiques du Yucatán dans notre restaurant entouré de nature.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Soupe de Citron Vert', rest_item3:'Poc Chuc', rest_item4:'Boissons Fraîches',
+    ubi_titulo:'Localisation Exacte', ubi_nombre:'Cenote Yokdzonot, Yucatán, Mexique', ubi_desc:"Trouvez-nous facilement avec l'itinéraire direct depuis votre position!",
+    modo_coche:'Voiture', modo_moto:'Moto', modo_bici:'Vélo', modo_pie:'À pied',
+    btn_llegar:'Itinéraire depuis ma position', btn_gmaps:'Ouvrir dans Google Maps',
+    gal_titulo:'Galerie', gal_desc:'Découvrez la beauté du cenote à travers ces images',
+    gal_360_titulo:'Vue 360°', gal_360_desc:'Explorez le cenote dans une expérience immersive à 360 degrés',
+    gal_360_c1:'Vue 360° — Cenote', gal_360_c1_desc:'Plongez dans une vue panoramique du cenote de l\'intérieur',
+    gal_360_c2:'Vue 360° — Entourage', gal_360_c2_desc:'Découvrez l\'environnement naturel qui entoure le cenote',
+    gal_360_btn:'Voir en 360°',
+    gal_verde_titulo:'Zones vertes', gal_verde_desc:'Explorez plus d\'images du cenote',
+    gal_video_titulo:'Vidéos', gal_video_desc:'Explorez le cenote en vidéo',
+    gal_sitios_titulo:'Plus que le cenote', gal_sitios_desc:'Explorez la zone entourant le cenote',
+    con_titulo:'Contactez-nous', con_wa:'Ouvrir WhatsApp', con_email:'Envoyer un Email',
+    con_horario:'Horaires', con_abierto:'🗓️ Réservez maintenant',
+    dia_mie:'Mercredi', dia_jue:'Jeudi', dia_vie:'Vendredi', dia_sab:'Samedi', dia_dom:'Dimanche', dia_lun:'Lundi', dia_mar:'Mardi',
+    sec1_titulo:'🌿 La nature à l\'état pur', sec1_desc:'Plongez dans les eaux cristallines du Cenote Yokdzonot. Idéal pour nager et se connecter à la nature.',
+    sec2_titulo:'🤿 Aventure sous-marine', sec2_desc:'Découvrez un monde sous-marin unique. Les stalactites et la lumière créent un spectacle incomparable.',
+    sec3_titulo:'👨‍👩‍👧 Idéal pour toute la famille', sec3_desc:'Un endroit sûr et magique pour vivre des moments uniques en famille.',
+  },
+  de: {
+    nav_inicio:'Startseite', nav_restaurante:'Restaurant', nav_ubicacion:'Standort', nav_galeria:'Galerie', nav_contacto:'Kontakt',
+    hero_titulo:'Willkommen im Cenote Yokdzonot', hero_subtitulo:'Genießen Sie die Natur auf einzigartige Weise im kristallklaren Wasser Yucatáns.',
+    rest_titulo:'Restaurant', rest_barra:'Restaurant', rest_tag:'Yucatekische Küche',
+    rest_desc:'Genießen Sie die authentischen Aromen Yucatáns in unserem Restaurant umgeben von Natur.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Limetten-Suppe', rest_item3:'Poc Chuc', rest_item4:'Frische Getränke',
+    ubi_titulo:'Genaue Lage', ubi_nombre:'Cenote Yokdzonot, Yucatán, Mexiko', ubi_desc:'Finden Sie uns einfach mit der direkten Route von Ihrem Standort!',
+    modo_coche:'Auto', modo_moto:'Motorrad', modo_bici:'Fahrrad', modo_pie:'Zu Fuß',
+    btn_llegar:'Route von meinem Standort', btn_gmaps:'In Google Maps öffnen',
+    gal_titulo:'Galerie', gal_desc:'Entdecken Sie die Schönheit des Cenotes durch diese Bilder',
+    gal_360_titulo:'360°-Ansicht', gal_360_desc:'Erkunden Sie das Cenote in einem immersiven 360-Grad-Erlebnis',
+    gal_360_c1:'360°-Ansicht — Cenote', gal_360_c1_desc:'Tauchen Sie ein in eine Panoramaansicht des Cenotes von innen',
+    gal_360_c2:'360°-Ansicht — Umgebung', gal_360_c2_desc:'Entdecken Sie die natürliche Umgebung des Cenotes',
+    gal_360_btn:'In 360° ansehen',
+    gal_verde_titulo:'Grünflächen', gal_verde_desc:'Entdecken Sie mehr Bilder des Cenotes',
+    gal_video_titulo:'Videos', gal_video_desc:'Erkunden Sie das Cenote im Video',
+    gal_sitios_titulo:'Mehr als das Cenote', gal_sitios_desc:'Erkunden Sie die Umgebung des Cenotes',
+    con_titulo:'Kontakt', con_wa:'WhatsApp öffnen', con_email:'E-Mail senden',
+    con_horario:'Öffnungszeiten', con_abierto:'🗓️ Jetzt buchen',
+    dia_mie:'Mittwoch', dia_jue:'Donnerstag', dia_vie:'Freitag', dia_sab:'Samstag', dia_dom:'Sonntag', dia_lun:'Montag', dia_mar:'Dienstag',
+    sec1_titulo:'🌿 Natur im reinsten Zustand', sec1_desc:'Tauchen Sie ein in das kristallklare Wasser des Cenote Yokdzonot.',
+    sec2_titulo:'🤿 Unterwasserabenteuer', sec2_desc:'Entdecken Sie eine einzigartige Unterwasserwelt.',
+    sec3_titulo:'👨‍👩‍👧 Ideal für die ganze Familie', sec3_desc:'Ein sicherer und magischer Ort für unvergessliche Momente mit Ihrer Familie.',
+  },
+  it: {
+    nav_inicio:'Inizio', nav_restaurante:'Ristorante', nav_ubicacion:'Posizione', nav_galeria:'Galleria', nav_contacto:'Contattaci',
+    hero_titulo:'Benvenuti al Cenote Yokdzonot', hero_subtitulo:'Goditi la natura in modo unico nelle acque cristalline dello Yucatán.',
+    rest_titulo:'Ristorante', rest_barra:'Ristorante', rest_tag:'Cucina Yucateca',
+    rest_desc:'Goditi i sapori autentici dello Yucatán nel nostro ristorante circondato dalla natura.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Zuppa di Lime', rest_item3:'Poc Chuc', rest_item4:'Bevande Fresche',
+    ubi_titulo:'Posizione Esatta', ubi_nombre:'Cenote Yokdzonot, Yucatán, Messico', ubi_desc:'Trovaci facilmente con il percorso diretto dalla tua posizione!',
+    modo_coche:'Auto', modo_moto:'Moto', modo_bici:'Bicicletta', modo_pie:'A piedi',
+    btn_llegar:'Come arrivare dalla mia posizione', btn_gmaps:'Apri in Google Maps',
+    gal_titulo:'Galleria', gal_desc:'Scopri la bellezza del cenote attraverso queste immagini',
+    gal_360_titulo:'Vista 360°', gal_360_desc:'Esplora il cenote in un\'esperienza immersiva a 360 gradi',
+    gal_360_c1:'Vista 360° — Cenote', gal_360_c1_desc:'Immergiti in una vista panoramica del cenote dall\'interno',
+    gal_360_c2:'Vista 360° — Ambiente', gal_360_c2_desc:'Scopri l\'ambiente naturale che circonda il cenote',
+    gal_360_btn:'Vedi in 360°',
+    gal_verde_titulo:'Zone verdi', gal_verde_desc:'Esplora altre immagini del cenote',
+    gal_video_titulo:'Video', gal_video_desc:'Esplora il cenote in video',
+    gal_sitios_titulo:'Oltre il cenote', gal_sitios_desc:'Esplora l\'area che circonda il cenote',
+    con_titulo:'Contattaci', con_wa:'Apri WhatsApp', con_email:'Invia Email',
+    con_horario:'Orario', con_abierto:'🗓️ Prenota ora',
+    dia_mie:'Mercoledì', dia_jue:'Giovedì', dia_vie:'Venerdì', dia_sab:'Sabato', dia_dom:'Domenica', dia_lun:'Lunedì', dia_mar:'Martedì',
+    sec1_titulo:'🌿 Natura allo stato puro', sec1_desc:'Immergiti nelle acque cristalline del Cenote Yokdzonot.',
+    sec2_titulo:'🤿 Avventura sott\'acqua', sec2_desc:'Scopri un mondo sottomarino unico.',
+    sec3_titulo:'👨‍👩‍👧 Ideale per tutta la famiglia', sec3_desc:'Un luogo sicuro e magico per vivere momenti unici con la tua famiglia.',
+  },
+  pt: {
+    nav_inicio:'Início', nav_restaurante:'Restaurante', nav_ubicacion:'Localização', nav_galeria:'Galeria', nav_contacto:'Contato',
+    hero_titulo:'Bem-vindo ao Cenote Yokdzonot', hero_subtitulo:'Aproveite a natureza de forma única nas águas cristalinas de Yucatán.',
+    rest_titulo:'Restaurante', rest_barra:'Restaurante', rest_tag:'Cozinha Yucateca',
+    rest_desc:'Desfrute dos sabores autênticos de Yucatán em nosso restaurante rodeado de natureza.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Sopa de Lima', rest_item3:'Poc Chuc', rest_item4:'Bebidas Frescas',
+    ubi_titulo:'Localização Exata', ubi_nombre:'Cenote Yokdzonot, Yucatán, México', ubi_desc:'Encontre-nos facilmente com a rota direta da sua localização!',
+    modo_coche:'Carro', modo_moto:'Moto', modo_bici:'Bicicleta', modo_pie:'A pé',
+    btn_llegar:'Como chegar da minha localização', btn_gmaps:'Abrir no Google Maps',
+    gal_titulo:'Galeria', gal_desc:'Descubra a beleza do cenote através destas imagens',
+    gal_360_titulo:'Vista 360°', gal_360_desc:'Explore o cenote em uma experiência imersiva de 360 graus',
+    gal_360_c1:'Vista 360° — Cenote', gal_360_c1_desc:'Mergulhe em uma vista panorâmica do cenote por dentro',
+    gal_360_c2:'Vista 360° — Entorno', gal_360_c2_desc:'Descubra o ambiente natural ao redor do cenote',
+    gal_360_btn:'Ver em 360°',
+    gal_verde_titulo:'Áreas verdes', gal_verde_desc:'Explore mais imagens do cenote',
+    gal_video_titulo:'Vídeos', gal_video_desc:'Explore o cenote em vídeo',
+    gal_sitios_titulo:'Mais que o cenote', gal_sitios_desc:'Explore a área ao redor do cenote',
+    con_titulo:'Contato', con_wa:'Abrir WhatsApp', con_email:'Enviar Email',
+    con_horario:'Horário', con_abierto:'🗓️ Reserve agora',
+    dia_mie:'Quarta-feira', dia_jue:'Quinta-feira', dia_vie:'Sexta-feira', dia_sab:'Sábado', dia_dom:'Domingo', dia_lun:'Segunda-feira', dia_mar:'Terça-feira',
+    sec1_titulo:'🌿 Natureza em estado puro', sec1_desc:'Mergulhe nas águas cristalinas do Cenote Yokdzonot.',
+    sec2_titulo:'🤿 Aventura subaquática', sec2_desc:'Descubra um mundo subaquático único.',
+    sec3_titulo:'👨‍👩‍👧 Ideal para toda a família', sec3_desc:'Um lugar seguro e mágico para viver momentos únicos com sua família.',
+  },
+  'es-ar': {
+    nav_inicio:'Inicio', nav_restaurante:'Restaurante', nav_ubicacion:'Ubicación', nav_galeria:'Galería', nav_contacto:'Contactanos',
+    hero_titulo:'Bienvenidos al Cenote Yokdzonot', hero_subtitulo:'Disfrutá de la naturaleza de una manera única en las aguas cristalinas de Yucatán.',
+    rest_titulo:'Restaurante', rest_barra:'Restaurante', rest_tag:'Cocina Yucateca',
+    rest_desc:'Disfrutá los sabores auténticos de Yucatán en nuestro restaurante, rodeado de naturaleza.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Sopa de Lima', rest_item3:'Poc Chuc', rest_item4:'Bebidas Frescas',
+    ubi_titulo:'Ubicación Exacta', ubi_nombre:'Cenote Yokdzonot, Yucatán, México', ubi_desc:'¡Encontranos fácilmente con la ruta directa desde tu ubicación!',
+    modo_coche:'Auto', modo_moto:'Moto', modo_bici:'Bicicleta', modo_pie:'Caminando',
+    btn_llegar:'Cómo llegar desde mi ubicación', btn_gmaps:'Abrir en Google Maps',
+    gal_titulo:'Galería', gal_desc:'Descubrí la belleza del cenote a través de estas imágenes',
+    gal_360_titulo:'Vista 360°', gal_360_desc:'Explorá el cenote en una experiencia inmersiva de 360 grados',
+    gal_360_c1:'Vista 360° — Cenote', gal_360_c1_desc:'Zambullite en una vista panorámica del cenote desde adentro',
+    gal_360_c2:'Vista 360° — Entorno', gal_360_c2_desc:'Descubrí el entorno natural que rodea el cenote',
+    gal_360_btn:'Ver en 360°',
+    gal_verde_titulo:'Zonas verdes', gal_verde_desc:'Explorá más imágenes del cenote',
+    gal_video_titulo:'Videos', gal_video_desc:'Explorá el cenote en video',
+    gal_sitios_titulo:'Sitios además del cenote', gal_sitios_desc:'Explorá más el lugar donde se encuentra el cenote',
+    con_titulo:'Contactanos', con_wa:'Abrir WhatsApp', con_email:'Enviar Email',
+    con_horario:'Horario', con_abierto:'🗓️ Reservá ahora mismo',
+    dia_mie:'Miércoles', dia_jue:'Jueves', dia_vie:'Viernes', dia_sab:'Sábado', dia_dom:'Domingo', dia_lun:'Lunes', dia_mar:'Martes',
+    sec1_titulo:'🌿 Naturaleza en estado puro', sec1_desc:'Zambullite en las aguas cristalinas del Cenote Yokdzonot.',
+    sec2_titulo:'🤿 Aventura bajo el agua', sec2_desc:'Descubrí un mundo subacuático único.',
+    sec3_titulo:'👨‍👩‍👧 Ideal para toda la familia', sec3_desc:'Un lugar seguro y mágico para vivir momentos únicos con tu familia.',
+  },
+  nl: {
+    nav_inicio:'Start', nav_restaurante:'Restaurant', nav_ubicacion:'Locatie', nav_galeria:'Galerij', nav_contacto:'Contact',
+    hero_titulo:'Welkom bij Cenote Yokdzonot', hero_subtitulo:'Geniet op unieke wijze van de natuur in het kristalheldere water van Yucatán.',
+    rest_titulo:'Restaurant', rest_barra:'Restaurant', rest_tag:'Yucataanse Keuken',
+    rest_desc:'Geniet van de authentieke smaken van Yucatán in ons restaurant omgeven door natuur.',
+    rest_item1:'Cochinita Pibil', rest_item2:'Limoenensoep', rest_item3:'Poc Chuc', rest_item4:'Verse Dranken',
+    ubi_titulo:'Exacte Locatie', ubi_nombre:'Cenote Yokdzonot, Yucatán, Mexico', ubi_desc:'Vind ons eenvoudig met de directe route vanaf uw locatie!',
+    modo_coche:'Auto', modo_moto:'Motor', modo_bici:'Fiets', modo_pie:'Lopen',
+    btn_llegar:'Route vanaf mijn locatie', btn_gmaps:'Openen in Google Maps',
+    gal_titulo:'Galerij', gal_desc:'Ontdek de schoonheid van het cenote via deze afbeeldingen',
+    gal_360_titulo:'360°-weergave', gal_360_desc:'Verken het cenote in een meeslepende 360 graden ervaring',
+    gal_360_c1:'360°-weergave — Cenote', gal_360_c1_desc:'Dompel jezelf onder in een panoramisch uitzicht op het cenote',
+    gal_360_c2:'360°-weergave — Omgeving', gal_360_c2_desc:'Ontdek de natuurlijke omgeving rondom het cenote',
+    gal_360_btn:'Bekijken in 360°',
+    gal_verde_titulo:'Groene gebieden', gal_verde_desc:'Ontdek meer afbeeldingen van het cenote',
+    gal_video_titulo:'Video\'s', gal_video_desc:'Verken het cenote in video',
+    gal_sitios_titulo:'Meer dan het cenote', gal_sitios_desc:'Verken de omgeving van het cenote',
+    con_titulo:'Contact', con_wa:'WhatsApp openen', con_email:'E-mail sturen',
+    con_horario:'Openingstijden', con_abierto:'🗓️ Boek nu',
+    dia_mie:'Woensdag', dia_jue:'Donderdag', dia_vie:'Vrijdag', dia_sab:'Zaterdag', dia_dom:'Zondag', dia_lun:'Maandag', dia_mar:'Dinsdag',
+    sec1_titulo:'🌿 Natuur in zijn zuiverste staat', sec1_desc:'Duik in het kristalheldere water van Cenote Yokdzonot.',
+    sec2_titulo:'🤿 Onderwateravontuur', sec2_desc:'Ontdek een unieke onderwaterwereld.',
+    sec3_titulo:'👨‍👩‍👧 Ideaal voor het hele gezin', sec3_desc:'Een veilige en magische plek voor unieke momenten met uw gezin.',
+  },
+  ja: {
+    nav_inicio:'ホーム', nav_restaurante:'レストラン', nav_ubicacion:'場所', nav_galeria:'ギャラリー', nav_contacto:'お問い合わせ',
+    hero_titulo:'セノーテ・ヨクドゾノットへようこそ', hero_subtitulo:'ユカタンの澄んだ水で自然を体験しましょう。',
+    rest_titulo:'レストラン', rest_barra:'レストラン', rest_tag:'ユカタン料理',
+    rest_desc:'自然に囲まれたレストランでユカタンの本場の味をお楽しみください。',
+    rest_item1:'コチニータ・ピビル', rest_item2:'ライムスープ', rest_item3:'ポク・チュク', rest_item4:'フレッシュドリンク',
+    ubi_titulo:'正確な場所', ubi_nombre:'セノーテ・ヨクドゾノット、ユカタン、メキシコ', ubi_desc:'現在地からの直接ルートで簡単にお越しいただけます！',
+    modo_coche:'車', modo_moto:'バイク', modo_bici:'自転車', modo_pie:'徒歩',
+    btn_llegar:'現在地からの道順', btn_gmaps:'Google マップで開く',
+    gal_titulo:'ギャラリー', gal_desc:'これらの画像でセノーテの美しさを発見してください',
+    gal_360_titulo:'360°ビュー', gal_360_desc:'360度の没入型体験でセノーテを探索してください',
+    gal_360_c1:'360°ビュー — セノーテ', gal_360_c1_desc:'内側からセノーテのパノラマビューに没入しましょう',
+    gal_360_c2:'360°ビュー — 周辺環境', gal_360_c2_desc:'セノーテを囲む自然環境を発見してください',
+    gal_360_btn:'360°で見る',
+    gal_verde_titulo:'緑地帯', gal_verde_desc:'セノーテのさらなる画像を探索してください',
+    gal_video_titulo:'動画', gal_video_desc:'動画でセノーテを探索してください',
+    gal_sitios_titulo:'セノーテ以外の場所', gal_sitios_desc:'セノーテがある場所の周辺をもっと探索してください',
+    con_titulo:'お問い合わせ', con_wa:'WhatsAppを開く', con_email:'メールを送る',
+    con_horario:'営業時間', con_abierto:'🗓️ 今すぐ予約',
+    dia_mie:'水曜日', dia_jue:'木曜日', dia_vie:'金曜日', dia_sab:'土曜日', dia_dom:'日曜日', dia_lun:'月曜日', dia_mar:'火曜日',
+    sec1_titulo:'🌿 純粋な自然', sec1_desc:'セノーテ・ヨクドゾノットの澄んだ水に飛び込もう。',
+    sec2_titulo:'🤿 水中アドベンチャー', sec2_desc:'ユニークな水中世界を発見しましょう。',
+    sec3_titulo:'👨‍👩‍👧 家族みんなに最適', sec3_desc:'家族でユニークな瞬間を過ごせる安全で魔法のような場所。',
+  },
+  zh: {
+    nav_inicio:'首页', nav_restaurante:'餐厅', nav_ubicacion:'位置', nav_galeria:'画廊', nav_contacto:'联系我们',
+    hero_titulo:'欢迎来到约克佐诺特天坑', hero_subtitulo:'在尤卡坦清澈的水域中以独特的方式享受大自然。',
+    rest_titulo:'餐厅', rest_barra:'餐厅', rest_tag:'尤卡坦美食',
+    rest_desc:'在我们被自然环绕的餐厅中享受尤卡坦的正宗风味。',
+    rest_item1:'科奇尼塔烤猪', rest_item2:'柠檬汤', rest_item3:'波克猪肉', rest_item4:'新鲜饮料',
+    ubi_titulo:'确切位置', ubi_nombre:'约克佐诺特天坑，尤卡坦，墨西哥', ubi_desc:'从您的位置轻松找到我们！',
+    modo_coche:'汽车', modo_moto:'摩托车', modo_bici:'自行车', modo_pie:'步行',
+    btn_llegar:'从我的位置获取路线', btn_gmaps:'在谷歌地图中打开',
+    gal_titulo:'画廊', gal_desc:'通过这些图片发现天坑的美丽',
+    gal_360_titulo:'360°全景', gal_360_desc:'在沉浸式360度体验中探索天坑',
+    gal_360_c1:'360°全景 — 天坑', gal_360_c1_desc:'从内部沉浸在天坑的全景视图中',
+    gal_360_c2:'360°全景 — 周边环境', gal_360_c2_desc:'发现天坑周围的自然环境',
+    gal_360_btn:'360°查看',
+    gal_verde_titulo:'绿色区域', gal_verde_desc:'探索更多天坑的图片',
+    gal_video_titulo:'视频', gal_video_desc:'通过视频探索天坑',
+    gal_sitios_titulo:'天坑以外的地方', gal_sitios_desc:'探索天坑所在地的周边环境',
+    con_titulo:'联系我们', con_wa:'打开WhatsApp', con_email:'发送邮件',
+    con_horario:'营业时间', con_abierto:'🗓️ 立即预订',
+    dia_mie:'星期三', dia_jue:'星期四', dia_vie:'星期五', dia_sab:'星期六', dia_dom:'星期日', dia_lun:'星期一', dia_mar:'星期二',
+    sec1_titulo:'🌿 纯净自然', sec1_desc:'跳入约克佐诺特天坑的清澈水域。',
+    sec2_titulo:'🤿 水下探险', sec2_desc:'探索独特的水下世界。',
+    sec3_titulo:'👨‍👩‍👧 全家适合', sec3_desc:'一个安全而神奇的地方，与家人共度独特时光。',
+  },
+  ko: {
+    nav_inicio:'홈', nav_restaurante:'레스토랑', nav_ubicacion:'위치', nav_galeria:'갤러리', nav_contacto:'문의하기',
+    hero_titulo:'세노테 욕드조노트에 오신 것을 환영합니다', hero_subtitulo:'유카탄의 맑은 물에서 자연을 독특하게 즐겨보세요.',
+    rest_titulo:'레스토랑', rest_barra:'레스토랑', rest_tag:'유카탄 요리',
+    rest_desc:'자연으로 둘러싸인 레스토랑에서 유카탄의 정통 맛을 즐겨보세요.',
+    rest_item1:'코치니타 피빌', rest_item2:'라임 수프', rest_item3:'포크 척', rest_item4:'신선한 음료',
+    ubi_titulo:'정확한 위치', ubi_nombre:'세노테 욕드조노트, 유카탄, 멕시코', ubi_desc:'현재 위치에서 직접 경로로 쉽게 찾아오세요!',
+    modo_coche:'자동차', modo_moto:'오토바이', modo_bici:'자전거', modo_pie:'도보',
+    btn_llegar:'내 위치에서 길 안내', btn_gmaps:'구글 지도에서 열기',
+    gal_titulo:'갤러리', gal_desc:'이 이미지를 통해 세노테의 아름다움을 발견하세요',
+    gal_360_titulo:'360° 뷰', gal_360_desc:'몰입형 360도 경험으로 세노테를 탐험하세요',
+    gal_360_c1:'360° 뷰 — 세노테', gal_360_c1_desc:'내부에서 세노테의 파노라마 뷰에 빠져보세요',
+    gal_360_c2:'360° 뷰 — 주변 환경', gal_360_c2_desc:'세노테를 둘러싼 자연 환경을 발견하세요',
+    gal_360_btn:'360°로 보기',
+    gal_verde_titulo:'녹지 구역', gal_verde_desc:'세노테의 더 많은 이미지를 탐험하세요',
+    gal_video_titulo:'동영상', gal_video_desc:'동영상으로 세노테를 탐험하세요',
+    gal_sitios_titulo:'세노테 외의 장소', gal_sitios_desc:'세노테가 있는 곳의 주변을 더 탐험하세요',
+    con_titulo:'문의하기', con_wa:'WhatsApp 열기', con_email:'이메일 보내기',
+    con_horario:'운영 시간', con_abierto:'🗓️ 지금 예약',
+    dia_mie:'수요일', dia_jue:'목요일', dia_vie:'금요일', dia_sab:'토요일', dia_dom:'일요일', dia_lun:'월요일', dia_mar:'화요일',
+    sec1_titulo:'🌿 순수한 자연', sec1_desc:'세노테 욕드조노트의 맑은 물속으로 뛰어드세요.',
+    sec2_titulo:'🤿 수중 모험', sec2_desc:'독특한 수중 세계를 발견하세요.',
+    sec3_titulo:'👨‍👩‍👧 온 가족에게 완벽', sec3_desc:'가족과 함께 특별한 순간을 경험할 수 있는 안전하고 마법 같은 장소.',
+  },
+  ru: {
+    nav_inicio:'Главная', nav_restaurante:'Ресторан', nav_ubicacion:'Местоположение', nav_galeria:'Галерея', nav_contacto:'Связаться',
+    hero_titulo:'Добро пожаловать в Сенот Йокдзонот', hero_subtitulo:'Наслаждайтесь природой в кристально чистых водах Юкатана.',
+    rest_titulo:'Ресторан', rest_barra:'Ресторан', rest_tag:'Кухня Юкатана',
+    rest_desc:'Насладитесь подлинными вкусами Юкатана в нашем ресторане, окружённом природой.',
+    rest_item1:'Кочинита Пибиль', rest_item2:'Суп с лаймом', rest_item3:'Пок Чук', rest_item4:'Свежие напитки',
+    ubi_titulo:'Точное местоположение', ubi_nombre:'Сенот Йокдзонот, Юкатан, Мексика', ubi_desc:'Найдите нас по прямому маршруту от вашего местоположения!',
+    modo_coche:'Автомобиль', modo_moto:'Мотоцикл', modo_bici:'Велосипед', modo_pie:'Пешком',
+    btn_llegar:'Маршрут от моего местоположения', btn_gmaps:'Открыть в Google Maps',
+    gal_titulo:'Галерея', gal_desc:'Откройте для себя красоту сенота через эти изображения',
+    gal_360_titulo:'Вид 360°', gal_360_desc:'Исследуйте сенот в захватывающем 360-градусном опыте',
+    gal_360_c1:'Вид 360° — Сенот', gal_360_c1_desc:'Погрузитесь в панорамный вид сенота изнутри',
+    gal_360_c2:'Вид 360° — Окружение', gal_360_c2_desc:'Откройте для себя природное окружение сенота',
+    gal_360_btn:'Смотреть в 360°',
+    gal_verde_titulo:'Зелёные зоны', gal_verde_desc:'Исследуйте больше изображений сенота',
+    gal_video_titulo:'Видео', gal_video_desc:'Исследуйте сенот в видео',
+    gal_sitios_titulo:'Больше чем сенот', gal_sitios_desc:'Исследуйте окрестности сенота',
+    con_titulo:'Связаться', con_wa:'Открыть WhatsApp', con_email:'Отправить Email',
+    con_horario:'Режим работы', con_abierto:'🗓️ Забронировать сейчас',
+    dia_mie:'Среда', dia_jue:'Четверг', dia_vie:'Пятница', dia_sab:'Суббота', dia_dom:'Воскресенье', dia_lun:'Понедельник', dia_mar:'Вторник',
+    sec1_titulo:'🌿 Природа в чистом виде', sec1_desc:'Окунитесь в кристально чистые воды Сенот Йокдзонот.',
+    sec2_titulo:'🤿 Подводное приключение', sec2_desc:'Откройте для себя уникальный подводный мир.',
+    sec3_titulo:'👨‍👩‍👧 Идеально для всей семьи', sec3_desc:'Безопасное и волшебное место для незабываемых моментов с семьёй.',
+  },
+  ar: {
+    nav_inicio:'الرئيسية', nav_restaurante:'المطعم', nav_ubicacion:'الموقع', nav_galeria:'المعرض', nav_contacto:'اتصل بنا',
+    hero_titulo:'مرحباً بكم في سينوتي يوكدزونوت', hero_subtitulo:'استمتع بالطبيعة بطريقة فريدة في المياه الصافية ليوكاتان.',
+    rest_titulo:'المطعم', rest_barra:'المطعم', rest_tag:'المطبخ اليوكاتاني',
+    rest_desc:'استمتع بالنكهات الأصيلة ليوكاتان في مطعمنا المحاط بالطبيعة.',
+    rest_item1:'كوتشينيتا بيبيل', rest_item2:'حساء الليمون', rest_item3:'بوك تشوك', rest_item4:'مشروبات طازجة',
+    ubi_titulo:'الموقع الدقيق', ubi_nombre:'سينوتي يوكدزونوت، يوكاتان، المكسيك', ubi_desc:'اعثر علينا بسهولة مع المسار المباشر من موقعك!',
+    modo_coche:'سيارة', modo_moto:'دراجة نارية', modo_bici:'دراجة هوائية', modo_pie:'مشياً',
+    btn_llegar:'الاتجاهات من موقعي', btn_gmaps:'فتح في خرائط جوجل',
+    gal_titulo:'المعرض', gal_desc:'اكتشف جمال السينوتي من خلال هذه الصور',
+    gal_360_titulo:'منظر 360°', gal_360_desc:'استكشف السينوتي في تجربة غامرة بزاوية 360 درجة',
+    gal_360_c1:'منظر 360° — السينوتي', gal_360_c1_desc:'انغمس في منظر بانورامي للسينوتي من الداخل',
+    gal_360_c2:'منظر 360° — المحيط', gal_360_c2_desc:'اكتشف البيئة الطبيعية المحيطة بالسينوتي',
+    gal_360_btn:'عرض بزاوية 360°',
+    gal_verde_titulo:'المناطق الخضراء', gal_verde_desc:'استكشف المزيد من صور السينوتي',
+    gal_video_titulo:'مقاطع الفيديو', gal_video_desc:'استكشف السينوتي بالفيديو',
+    gal_sitios_titulo:'أماكن أخرى بجانب السينوتي', gal_sitios_desc:'استكشف المنطقة المحيطة بالسينوتي',
+    con_titulo:'اتصل بنا', con_wa:'فتح واتساب', con_email:'إرسال بريد إلكتروني',
+    con_horario:'ساعات العمل', con_abierto:'🗓️ احجز الآن',
+    dia_mie:'الأربعاء', dia_jue:'الخميس', dia_vie:'الجمعة', dia_sab:'السبت', dia_dom:'الأحد', dia_lun:'الاثنين', dia_mar:'الثلاثاء',
+    sec1_titulo:'🌿 الطبيعة في أنقى صورها', sec1_desc:'انغمس في المياه الصافية لسينوتي يوكدزونوت.',
+    sec2_titulo:'🤿 مغامرة تحت الماء', sec2_desc:'اكتشف عالماً مائياً فريداً.',
+    sec3_titulo:'👨‍👩‍👧 مثالي للعائلة بأكملها', sec3_desc:'مكان آمن وساحر لتجربة لحظات فريدة مع عائلتك.',
+  },
+};
+
+const langLabels = { es:'ES', en:'EN', 'en-gb':'EN', fr:'FR', de:'DE', it:'IT', pt:'PT', 'es-ar':'ES', nl:'NL', ja:'JP', zh:'ZH', ko:'KO', ru:'RU', ar:'AR' };
+
+function abrirModal() { document.getElementById('modalOverlay').classList.add('open'); }
+function cerrarModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function cerrarModalFuera(e) { if (e.target===document.getElementById('modalOverlay')) cerrarModal(); }
+
+function elegirIdioma(lang, el) {
+  if (el) {
+    document.querySelectorAll('.lang-grid-item').forEach(i=>i.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  cambiarIdioma(lang);
+  setTimeout(cerrarModal, 300);
+}
+
+function cambiarIdioma(lang) {
+  idiomaActual = lang;
+  const t = traducciones[lang] || traducciones['es'];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  document.getElementById('langLabel').textContent = langLabels[lang] || 'ES';
+}
+
+let map, userMarker, routeLine;
+let modoTransporte = 'driving';
+let idiomaActual = 'es';
+const velocidades = { driving:80, bike:60, cycling:15, foot:5 };
+const emojis = { driving:'🚗', bike:'🏍️', cycling:'🚲', foot:'🚶' };
+
+function calcularTiempo(metros) {
+  const km = metros/1000;
+  const mins = Math.round((km/velocidades[modoTransporte])*60);
+  const h = Math.floor(mins/60), m = mins%60;
+  const tiempoTexto = h>0?`${h}h ${m}min`:`${m} min`;
+  return { tiempoTexto, distanciaKm: km.toFixed(1) };
+}
+
+function initMap() {
+  map = L.map('mapa',{zoomControl:false}).setView([20.7069109,-88.7305138],14);
+  const mapaNormal = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'© CartoDB'});
+  const satelite   = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri'});
+  const oscuro     = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© CartoDB'});
+  mapaNormal.addTo(map);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  const ico = L.divIcon({html:`<div style="width:28px;height:28px;background:#EA4335;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 10px rgba(0,0,0,0.4);"></div>`,iconSize:[28,28],iconAnchor:[14,28],className:''});
+  L.marker([20.7069109,-88.7305138],{icon:ico}).addTo(map)
+    .bindPopup(`<div style="font-family:'Segoe UI';padding:4px;min-width:180px;"><strong style="color:#1e3c72;font-size:14px;">Cenote Yokdzonot</strong><br><span style="color:#666;font-size:12px;">Yokdzonot, Yucatán, México</span><br><span style="color:#f4a400;font-size:12px;">★★★★★</span><span style="color:#34a853;font-size:12px;margin-left:6px;">● Abierto</span></div>`).openPopup();
+  L.control.layers({"🗺️ Mapa":mapaNormal,"🛰️ Satélite":satelite,"🌙 Oscuro":oscuro},null,{position:'topright'}).addTo(map);
+}
+
+function mostrar(seccion) {
+  ["inicio","restaurante","lugar","galeria","contacto"].forEach(s=>document.getElementById(s).classList.remove('active'));
+  document.getElementById(seccion).classList.add('active');
+  document.querySelector('.container').scrollIntoView({behavior:'smooth'});
+  if (seccion==="lugar") setTimeout(()=>map.invalidateSize(),300);
+}
+
+function crearRuta(lat,lng) {
+  const er = document.getElementById("estadoRuta");
+  if (routeLine) map.removeControl(routeLine);
+  routeLine = L.Routing.control({
+    waypoints:[L.latLng(lat,lng),L.latLng(20.7069109,-88.7305138)],
+    router:L.Routing.osrmv1({serviceUrl:'https://router.project-osrm.org/route/v1',profile:'driving'}),
+    routeWhileDragging:false,draggableWaypoints:false,addWaypoints:false,show:false
+  }).addTo(map);
+  routeLine.on('routesfound',function(e){
+    const {tiempoTexto,distanciaKm}=calcularTiempo(e.routes[0].summary.totalDistance);
+    const textoKm = idiomaActual==='ar'?'كم':idiomaActual==='zh'?'公里':'km';
+    er.innerHTML=`${emojis[modoTransporte]} ${tiempoTexto} · 📏 ${distanciaKm} ${textoKm}`;
+  });
+}
+
+function seleccionarModo(modo,btn) {
+  modoTransporte=modo;
+  document.querySelectorAll('.btn-modo').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  if (userMarker) {
+    const er=document.getElementById("estadoRuta");
+    er.style.display='block'; er.innerHTML='🔄 Calculando...';
+    const p=userMarker.getLatLng(); crearRuta(p.lat,p.lng);
+  }
+}
+
+function comoLlegar(event) {
+  const btn=event.target.closest('button');
+  const orig=btn.innerHTML;
+  const er=document.getElementById("estadoRuta");
+  btn.innerHTML='📍 Detectando...'; btn.disabled=true;
+  er.style.display='block'; er.innerHTML='🔄 Obteniendo ubicación...';
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(pos){
+        const lat=pos.coords.latitude,lng=pos.coords.longitude;
+        if (userMarker) map.removeLayer(userMarker);
+        userMarker=L.marker([lat,lng]).addTo(map).bindPopup("📍 Tu ubicación").openPopup();
+        map.fitBounds([[lat,lng],[20.7069109,-88.7305138]]);
+        crearRuta(lat,lng);
+        btn.innerHTML='✅ Ruta mostrada'; btn.className='btn btn-success';
+        setTimeout(()=>{btn.disabled=false;btn.innerHTML=orig;btn.className='btn';},4000);
+      },
+      function(){
+        alert('❌ Activa GPS y permisos de ubicación');
+        btn.disabled=false; btn.innerHTML=orig; er.style.display='none';
+      },
+      {enableHighAccuracy:true,timeout:10000,maximumAge:30000}
+    );
+  } else {
+    alert('Tu navegador no soporta geolocalización');
+    btn.disabled=false; btn.innerHTML=orig;
+  }
+}
+
+function abrirMapaGoogle(){window.open('https://maps.app.goo.gl/Dpp2Gzkdd4TYYQnS7','_blank');}
+function abrirStreetView(){window.open("https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=20.7069109,-88.7305138","_blank");}
+
+function abrirLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function cerrarLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',e=>e.preventDefault()));
+});
+window.onload=initMap;
+</script>
+</body>
+</html>
