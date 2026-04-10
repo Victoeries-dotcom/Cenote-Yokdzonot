@@ -914,19 +914,40 @@ function mostrar(seccion) {
   if (seccion==="lugar") setTimeout(()=>map.invalidateSize(),300);
 }
 
-function crearRuta(lat,lng) {
+function crearRuta(lat, lng) {
   const er = document.getElementById("estadoRuta");
-  if (routeLine) map.removeControl(routeLine);
-  routeLine = L.Routing.control({
-    waypoints:[L.latLng(lat,lng),L.latLng(20.7069109,-88.7305138)],
-   router:L.Routing.osrmv1({serviceUrl:'https://routing.openstreetmap.de/routed-car/route/v1',profile:'driving'}), 
-    routeWhileDragging:false,draggableWaypoints:false,addWaypoints:false,show:false
-  }).addTo(map);
-  routeLine.on('routesfound',function(e){
-    const {tiempoTexto,distanciaKm}=calcularTiempo(e.routes[0].summary.totalDistance);
-    const textoKm = idiomaActual==='ar'?'كم':idiomaActual==='zh'?'公里':'km';
-    er.innerHTML=`${emojis[modoTransporte]} ${tiempoTexto} · 📏 ${distanciaKm} ${textoKm}`;
-  });
+  er.style.display = 'block';
+  er.innerHTML = '🔄 Calculando...';
+
+  const apiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6Ijg0NWEwNTIyMzRkMzRjNjdhMzkwNGE1NThiMDkzN2M0IiwiaCI6Im11cm11cjY0In0=';
+  const perfil = modoTransporte === 'foot' ? 'foot-walking' :
+                 modoTransporte === 'cycling' ? 'cycling-regular' :
+                 modoTransporte === 'bike' ? 'cycling-mountain' : 'driving-car';
+
+  const url = `https://api.openrouteservice.org/v2/directions/${perfil}?api_key=${apiKey}&start=${lng},${lat}&end=-88.7305138,20.7069109`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const coords = data.features[0].geometry.coordinates;
+      const distancia = data.features[0].properties.summary.distance;
+      const duracion = data.features[0].properties.summary.duration;
+
+      if (routeLine) map.removeLayer(routeLine);
+      const puntos = coords.map(c => [c[1], c[0]]);
+      routeLine = L.polyline(puntos, {color: '#0077b6', weight: 5, opacity: 0.8}).addTo(map);
+      map.fitBounds(routeLine.getBounds());
+
+      const mins = Math.round(duracion / 60);
+      const h = Math.floor(mins / 60), m = mins % 60;
+      const tiempoTexto = h > 0 ? `${h}h ${m}min` : `${m} min`;
+      const distKm = (distancia / 1000).toFixed(1);
+      const textoKm = idiomaActual==='ar'?'كم':idiomaActual==='zh'?'公里':'km';
+      er.innerHTML = `${emojis[modoTransporte]} ${tiempoTexto} · 📏 ${distKm} ${textoKm}`;
+    })
+    .catch(() => {
+      er.innerHTML = '❌ No se pudo calcular la ruta';
+    });
 }
 
 function seleccionarModo(modo,btn) {
