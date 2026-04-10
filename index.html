@@ -982,7 +982,7 @@ function comoLlegar(event) {
         alert('❌ Activa GPS y permisos de ubicación');
         btn.disabled=false; btn.innerHTML=orig; er.style.display='none';
       },
-      {enableHighAccuracy:true,timeout:10000,maximumAge:30000}
+    {enableHighAccuracy:false,timeout:20000,maximumAge:60000}
     );
   } else {
     alert('Tu navegador no soporta geolocalización');
