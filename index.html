@@ -1024,11 +1024,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 function abrirMenu() {
   const url = `https://xvalentiny.github.io/MenuCenote/?lang=${idiomaActual}`;
-  const ancho = Math.min(window.screen.width, 1000);
-  const alto = Math.min(window.screen.height, 700);
-  const izq = (window.screen.width - ancho) / 2;
-  const arr = (window.screen.height - alto) / 2;
-  window.open(url, 'menu', `width=${ancho},height=${alto},left=${izq},top=${arr},toolbar=no,menubar=no`);
+  window.open(url, '_blank');
 }
 
 function abrir360(url) {
