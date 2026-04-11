@@ -393,17 +393,17 @@ body {
           <div style="font-size:4rem; margin-bottom:1rem;">🌊</div>
           <h3 style="font-size:1.3rem; margin-bottom:0.5rem; color:#a8e063;" data-i18n="gal_360_c1">Vista 360° — Cenote</h3>
           <p style="opacity:0.8; margin-bottom:1.5rem; font-size:0.95rem;" data-i18n="gal_360_c1_desc">Sumérgete en una vista panorámica del cenote desde adentro</p>
-          <a href="https://maps.app.goo.gl/siHD5UVqBez6CCjp7" target="_blank"
-             style="background:linear-gradient(135deg,#0077b6,#00b4d8); color:white; padding:0.8rem 2rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:1rem; display:inline-block;"
-             data-i18n="gal_360_btn">Ver en 360°</a>
+         <button onclick="abrir360('https://maps.app.goo.gl/siHD5UVqBez6CCjp7')"
+             style="background:linear-gradient(135deg,#0077b6,#00b4d8); color:white; padding:0.8rem 2rem; border-radius:50px; border:none; font-weight:600; font-size:1rem; cursor:pointer;"
+             data-i18n="gal_360_btn">Ver en 360°</button>
         </div>
         <div style="flex:1; min-width:280px; background:linear-gradient(135deg,#0f2027,#203a43); border-radius:20px; padding:2rem; text-align:center; color:white;">
           <div style="font-size:4rem; margin-bottom:1rem;">🌿</div>
           <h3 style="font-size:1.3rem; margin-bottom:0.5rem; color:#a8e063;" data-i18n="gal_360_c2">Vista 360° — Entorno</h3>
           <p style="opacity:0.8; margin-bottom:1.5rem; font-size:0.95rem;" data-i18n="gal_360_c2_desc">Descubre el entorno natural que rodea el cenote en panorámica</p>
-          <a href="https://maps.app.goo.gl/XfQqtuaNh9KcKB248" target="_blank"
-             style="background:linear-gradient(135deg,#1b4332,#40916c); color:white; padding:0.8rem 2rem; border-radius:50px; text-decoration:none; font-weight:600; font-size:1rem; display:inline-block;"
-             data-i18n="gal_360_btn">Ver en 360°</a>
+        <button onclick="abrir360('https://maps.app.goo.gl/XfQqtuaNh9KcKB248')"
+             style="background:linear-gradient(135deg,#1b4332,#40916c); color:white; padding:0.8rem 2rem; border-radius:50px; border:none; font-weight:600; font-size:1rem; cursor:pointer;"
+             data-i18n="gal_360_btn">Ver en 360°</button>
         </div>
       </div>
     </div>
@@ -503,6 +503,14 @@ body {
     </div>
   </div>
 
+</div>
+
+<!-- MODAL 360 -->
+<div id="modal360" onclick="cerrar360()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center; padding:1rem;">
+  <div style="position:relative; width:100%; max-width:900px; height:85vh; background:#000; border-radius:16px; overflow:hidden;" onclick="event.stopPropagation()">
+    <button onclick="cerrar360()" style="position:absolute; top:0.8rem; right:0.8rem; z-index:10; background:rgba(255,255,255,0.2); border:none; color:white; font-size:1.5rem; width:40px; height:40px; border-radius:50%; cursor:pointer;">✕</button>
+    <iframe id="iframe360" src="" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
@@ -982,7 +990,7 @@ function comoLlegar(event) {
         alert('❌ Activa GPS y permisos de ubicación');
         btn.disabled=false; btn.innerHTML=orig; er.style.display='none';
       },
-    {enableHighAccuracy:false,timeout:20000,maximumAge:60000}
+   {enableHighAccuracy:false,timeout:20000,maximumAge:60000}
     );
   } else {
     alert('Tu navegador no soporta geolocalización');
@@ -1004,6 +1012,20 @@ function cerrarLightbox() {
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',e=>e.preventDefault()));
 });
+
+function abrir360(url) {
+  const ancho = Math.min(window.screen.width, 1000);
+  const alto = Math.min(window.screen.height, 700);
+  const izq = (window.screen.width - ancho) / 2;
+  const arr = (window.screen.height - alto) / 2;
+  window.open(url, 'vista360', `width=${ancho},height=${alto},left=${izq},top=${arr},toolbar=no,menubar=no`);
+}
+function cerrar360() {
+  document.getElementById('modal360').style.display = 'none';
+  document.getElementById('iframe360').src = '';
+  document.body.style.overflow = '';
+}
+
 window.onload=initMap;
 </script>
 </body>
