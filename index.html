@@ -329,11 +329,12 @@ body {
         <div class="restaurante-info">
           <span class="restaurante-tag" data-i18n="rest_tag">Cocina Yucateca</span>
           <p class="restaurante-desc" data-i18n="rest_desc">Disfruta de los sabores auténticos de Yucatán en nuestro restaurante, rodeado de naturaleza. Ofrecemos platillos tradicionales elaborados con ingredientes frescos y locales.</p>
-          <div class="menu-grid">
-            <div class="menu-item"><span>🫔</span><p data-i18n="rest_item1">Cochinita Pibil</p></div>
-            <div class="menu-item"><span>🍲</span><p data-i18n="rest_item2">Sopa de Lima</p></div>
-            <div class="menu-item"><span>🥘</span><p data-i18n="rest_item3">Poc Chuc</p></div>
-            <div class="menu-item"><span>🍹</span><p data-i18n="rest_item4">Aguas Frescas</p></div>
+      
+          <div style="text-align:center; margin-top:2rem;">
+          <button id="btnMenu" onclick="abrirMenu()"
+               style="background:linear-gradient(135deg,#a8e063,#56ab2f); color:white; padding:1rem 2.5rem; border-radius:50px; border:none; font-weight:700; font-size:1.1rem; cursor:pointer; box-shadow:0 10px 20px rgba(0,0,0,0.2);">
+              🍽️ <span data-i18n="rest_menu_btn">Ver Menú Completo</span>
+            </button>
           </div>
         </div>
       </div>
@@ -548,6 +549,8 @@ const traducciones = {
     sec1_titulo:'🌿 Naturaleza en estado puro', sec1_desc:'Sumérgete en las aguas cristalinas del Cenote Yokdzonot, un tesoro natural escondido en el corazón de Yucatán. Perfecta para nadar, snorkelear y conectar con la naturaleza.',
     sec2_titulo:'🤿 Aventura bajo el agua', sec2_desc:'Descubre un mundo subacuático único. Las estalactitas y la luz que penetra desde la superficie crean un espectáculo visual incomparable que no olvidarás.',
     sec3_titulo:'👨‍👩‍👧 Ideal para toda la familia', sec3_desc:'Un lugar seguro y mágico para vivir momentos únicos con tu familia. Actividades para todas las edades en un entorno natural privilegiado de Yucatán.',
+    rest_menu_btn:'Ver Menú Completo',
+
   },
   en: {
     nav_inicio:'Home', nav_restaurante:'Restaurant', nav_ubicacion:'Location', nav_galeria:'Gallery', nav_contacto:'Contact Us',
@@ -572,6 +575,7 @@ const traducciones = {
     sec1_titulo:'🌿 Nature in its pure state', sec1_desc:'Dive into the crystal-clear waters of Cenote Yokdzonot. Perfect for swimming, snorkeling and connecting with nature.',
     sec2_titulo:'🤿 Underwater adventure', sec2_desc:'Discover a unique underwater world. The stalactites and light create an incomparable visual spectacle.',
     sec3_titulo:'👨‍👩‍👧 Perfect for the whole family', sec3_desc:'A safe and magical place for unique moments with your family. Activities for all ages.',
+    rest_menu_btn:'View Full Menu',
   },
   'en-gb': {
     nav_inicio:'Home', nav_restaurante:'Restaurant', nav_ubicacion:'Location', nav_galeria:'Gallery', nav_contacto:'Contact Us',
@@ -596,6 +600,7 @@ const traducciones = {
     sec1_titulo:'🌿 Nature in its pure state', sec1_desc:'Dive into the crystal-clear waters of Cenote Yokdzonot. Perfect for swimming, snorkelling and connecting with nature.',
     sec2_titulo:'🤿 Underwater adventure', sec2_desc:'Discover a unique underwater world. The stalactites and light create an incomparable visual spectacle.',
     sec3_titulo:'👨‍👩‍👧 Perfect for the whole family', sec3_desc:'A safe and magical place for unique moments with your family. Activities for all ages.',
+    rest_menu_btn:'Voir le Menu Complet',
   },
   fr: {
     nav_inicio:'Accueil', nav_restaurante:'Restaurant', nav_ubicacion:'Localisation', nav_galeria:'Galerie', nav_contacto:'Contactez-nous',
@@ -620,6 +625,7 @@ const traducciones = {
     sec1_titulo:'🌿 La nature à l\'état pur', sec1_desc:'Plongez dans les eaux cristallines du Cenote Yokdzonot. Idéal pour nager et se connecter à la nature.',
     sec2_titulo:'🤿 Aventure sous-marine', sec2_desc:'Découvrez un monde sous-marin unique. Les stalactites et la lumière créent un spectacle incomparable.',
     sec3_titulo:'👨‍👩‍👧 Idéal pour toute la famille', sec3_desc:'Un endroit sûr et magique pour vivre des moments uniques en famille.',
+    rest_menu_btn:'Voir le Menu Complet',
   },
   de: {
     nav_inicio:'Startseite', nav_restaurante:'Restaurant', nav_ubicacion:'Standort', nav_galeria:'Galerie', nav_contacto:'Kontakt',
@@ -644,6 +650,7 @@ const traducciones = {
     sec1_titulo:'🌿 Natur im reinsten Zustand', sec1_desc:'Tauchen Sie ein in das kristallklare Wasser des Cenote Yokdzonot.',
     sec2_titulo:'🤿 Unterwasserabenteuer', sec2_desc:'Entdecken Sie eine einzigartige Unterwasserwelt.',
     sec3_titulo:'👨‍👩‍👧 Ideal für die ganze Familie', sec3_desc:'Ein sicherer und magischer Ort für unvergessliche Momente mit Ihrer Familie.',
+    rest_menu_btn:'Vollständiges Menü anzeigen',
   },
   it: {
     nav_inicio:'Inizio', nav_restaurante:'Ristorante', nav_ubicacion:'Posizione', nav_galeria:'Galleria', nav_contacto:'Contattaci',
@@ -668,6 +675,7 @@ const traducciones = {
     sec1_titulo:'🌿 Natura allo stato puro', sec1_desc:'Immergiti nelle acque cristalline del Cenote Yokdzonot.',
     sec2_titulo:'🤿 Avventura sott\'acqua', sec2_desc:'Scopri un mondo sottomarino unico.',
     sec3_titulo:'👨‍👩‍👧 Ideale per tutta la famiglia', sec3_desc:'Un luogo sicuro e magico per vivere momenti unici con la tua famiglia.',
+    rest_menu_btn:'Vedi il Menu Completo',
   },
   pt: {
     nav_inicio:'Início', nav_restaurante:'Restaurante', nav_ubicacion:'Localização', nav_galeria:'Galeria', nav_contacto:'Contato',
@@ -692,6 +700,7 @@ const traducciones = {
     sec1_titulo:'🌿 Natureza em estado puro', sec1_desc:'Mergulhe nas águas cristalinas do Cenote Yokdzonot.',
     sec2_titulo:'🤿 Aventura subaquática', sec2_desc:'Descubra um mundo subaquático único.',
     sec3_titulo:'👨‍👩‍👧 Ideal para toda a família', sec3_desc:'Um lugar seguro e mágico para viver momentos únicos com sua família.',
+    rest_menu_btn:'Ver Menu Completo',
   },
   'es-ar': {
     nav_inicio:'Inicio', nav_restaurante:'Restaurante', nav_ubicacion:'Ubicación', nav_galeria:'Galería', nav_contacto:'Contactanos',
@@ -1012,6 +1021,15 @@ function cerrarLightbox() {
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',e=>e.preventDefault()));
 });
+
+function abrirMenu() {
+  const url = `https://xvalentiny.github.io/MenuCenote/?lang=${idiomaActual}`;
+  const ancho = Math.min(window.screen.width, 1000);
+  const alto = Math.min(window.screen.height, 700);
+  const izq = (window.screen.width - ancho) / 2;
+  const arr = (window.screen.height - alto) / 2;
+  window.open(url, 'menu', `width=${ancho},height=${alto},left=${izq},top=${arr},toolbar=no,menubar=no`);
+}
 
 function abrir360(url) {
   const ancho = Math.min(window.screen.width, 1000);
